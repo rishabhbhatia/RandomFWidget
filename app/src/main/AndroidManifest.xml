@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.satiate.randomfwidget">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SplashActivity" >
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:launchMode="singleInstance"
+            android:taskAffinity=".tooleap">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,6 +45,25 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <service android:name="com.tooleap.sdk.TooleapAppService"/>
+        <service android:name="com.tooleap.sdk.TooleapUIService"
+            android:process=":UIService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.tooleap.sdk.BIND_UI_SERVICE" />
+            </intent-filter>
+        </service>
+        <receiver android:name="com.tooleap.sdk.TooleapReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.tooleap.sdk.TOOLEAP_ACTION"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
