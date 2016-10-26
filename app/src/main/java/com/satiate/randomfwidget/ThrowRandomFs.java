@@ -41,7 +41,18 @@ public class ThrowRandomFs extends AppWidgetProvider {
 
         if (SYNC_CLICKED.equals(intent.getAction())) {
             Log.d("rishabh","its a valid click");
+            sendAFurk(context);
         }
+    }
+
+    private void sendAFurk(Context context) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        sendIntent.setPackage("com.whatsapp");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Furk off");
+        sendIntent.setType("text/plain");
+        context.startActivity(sendIntent);
     }
 
     @Override
